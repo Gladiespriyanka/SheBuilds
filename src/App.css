@@ -1,0 +1,129 @@
+/* Background */
+.app {
+  height: 100vh;
+  width: 100%;
+  background: url("./assets/upsc-bg.png") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Dark overlay */
+.overlay {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+}
+
+/* Quote Section */
+.quote {
+  color: #fff;
+  max-width: 40%;
+}
+
+.quote h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.quote p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #ddd;
+}
+
+/* Login Box */
+.login-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+}
+
+.login-box {
+  background: rgba(255, 255, 255, 0.3); /* make it more transparent */
+  backdrop-filter: blur(10px);          /* adds the blur effect */
+  -webkit-backdrop-filter: blur(10px);  /* Safari support */
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* optional: adds subtle shadow */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* optional: light border */
+}
+.language-select {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.login-box h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.login-box h3 {
+  margin: 5px 0;
+  font-size: 1.2rem;
+}
+
+.login-box p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.checkbox {
+  text-align: left;
+  margin: 10px 0;
+  font-size: 0.85rem;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}
+
+.extra-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.extra-links a {
+  font-size: 0.85rem;
+  color: #0072ff;
+  text-decoration: none;
+}
+
+.signup {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.signup a {
+  color: #0072ff;
+  text-decoration: none;
+}

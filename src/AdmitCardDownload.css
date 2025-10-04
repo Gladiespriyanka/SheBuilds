@@ -1,0 +1,472 @@
+.admit-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #f7f9fc 0%, #e7edf6 100%);
+  font-family: 'Arial', sans-serif;
+  color: #1f2a40;
+}
+
+.admit-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 56px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dbe3ef;
+}
+
+.admit-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admit-emblem {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0c94b, #d8a216);
+  display: inline-block;
+}
+
+.admit-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #253143;
+}
+
+.admit-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.admit-nav-button,
+.admit-profile {
+  border: none;
+  background: none;
+  color: #5d6775;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 0;
+}
+
+.admit-nav-button:hover,
+.admit-profile:hover {
+  color: #24354b;
+}
+
+.admit-subnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #24354b;
+  color: #ffffff;
+  padding: 12px 56px;
+}
+
+.admit-subnav-title {
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+.admit-subnav-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.admit-subnav-button,
+.admit-subnav-profile {
+  background: none;
+  border: none;
+  color: #e4e9f2;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.admit-subnav-button:hover,
+.admit-subnav-profile:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.admit-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1100px;
+  margin: 40px auto 60px;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.admit-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admit-content-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2a40;
+}
+
+.admit-back-button {
+  border: none;
+  background: linear-gradient(135deg, #1f6ce0, #174a9c);
+  color: #ffffff;
+  padding: 10px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(23, 74, 156, 0.25);
+}
+
+.admit-back-button:hover {
+  background: linear-gradient(135deg, #2a7bf2, #1b56b3);
+}
+
+.admit-stepper {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.admit-step {
+  padding: 12px 16px;
+  border-radius: 16px;
+  background-color: #e4eaf5;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3a4a61;
+}
+
+.active-step {
+  background-color: #24354b;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(36, 53, 75, 0.25);
+}
+
+.admit-card-section {
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(20, 34, 54, 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.admit-form-header {
+  padding: 28px 32px 0;
+  border-bottom: 1px solid #e3ebf8;
+}
+
+.admit-form-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1d3a70;
+}
+
+.admit-form-subtitle {
+  margin: 6px 0 24px;
+  font-size: 16px;
+  color: #4d5d77;
+}
+
+.admit-form-body {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 32px;
+}
+
+.admit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admit-form-fieldset {
+  border: 1px solid #d0dae7;
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.admit-fieldset-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #2f3f58;
+}
+
+.admit-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #2f3f58;
+}
+
+.admit-radio-label input {
+  accent-color: #1f6ce0;
+}
+
+.admit-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admit-input-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3a4a61;
+}
+
+.admit-input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #c5cedb;
+  font-size: 14px;
+  color: #1f2a40;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admit-input:focus {
+  outline: none;
+  border-color: #1f6ce0;
+  box-shadow: 0 0 0 4px rgba(31, 108, 224, 0.18);
+}
+
+.admit-captcha-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admit-captcha-value {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 22px;
+  border-radius: 12px;
+  background-color: #1f2a40;
+  color: #ffffff;
+  font-family: 'Fira Code', monospace;
+  font-size: 18px;
+  letter-spacing: 4px;
+}
+
+.admit-refresh-button {
+  border: none;
+  background: #eef2f8;
+  color: #1f6ce0;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admit-refresh-button:hover {
+  background: #dbe6fb;
+}
+
+.admit-form-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admit-primary-button,
+.admit-secondary-button {
+  border: none;
+  border-radius: 28px;
+  padding: 12px 26px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admit-primary-button {
+  background: linear-gradient(135deg, #1f6ce0, #164f8d);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(31, 108, 224, 0.25);
+}
+
+.admit-primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(31, 108, 224, 0.3);
+}
+
+.admit-secondary-button {
+  background: linear-gradient(135deg, #4ab79c, #2d8875);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(74, 183, 156, 0.25);
+}
+
+.admit-secondary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(74, 183, 156, 0.3);
+}
+
+.admit-instructions {
+  background: linear-gradient(180deg, rgba(228, 235, 245, 0.6), rgba(210, 223, 240, 0.9));
+  border-radius: 18px;
+  padding: 24px 26px;
+  box-shadow: inset 0 0 0 1px rgba(206, 219, 237, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admit-instructions-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2a40;
+}
+
+.admit-instructions-list {
+  margin: 0;
+  padding-left: 20px;
+  color: #3a4a61;
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.admit-forgot-card {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(63, 81, 112, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admit-forgot-text {
+  margin: 0;
+  font-weight: 600;
+  color: #1f2a40;
+}
+
+.admit-link-button {
+  border: none;
+  background: none;
+  color: #1f6ce0;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.admit-link-button:hover {
+  text-decoration: underline;
+}
+
+.admit-feedback {
+  background-color: #ffffff;
+  border-left: 4px solid #1f6ce0;
+  padding: 18px 24px;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(20, 34, 54, 0.12);
+  color: #2f3f58;
+  display: grid;
+  gap: 6px;
+}
+
+.admit-footer {
+  background-color: #1f2a40;
+  color: #cfd7e3;
+  padding: 24px 56px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admit-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.admit-footer-button {
+  background: none;
+  border: 1px solid rgba(207, 215, 227, 0.4);
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.admit-footer-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.admit-footer-copy {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(207, 215, 227, 0.75);
+}
+
+@media (max-width: 992px) {
+  .admit-topbar,
+  .admit-subnav {
+    padding: 14px 24px;
+  }
+
+  .admit-form-body {
+    grid-template-columns: 1fr;
+  }
+
+  .admit-stepper {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .admit-topbar,
+  .admit-subnav,
+  .admit-content,
+  .admit-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .admit-topbar,
+  .admit-subnav,
+  .admit-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .admit-stepper {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+
+  .admit-back-button {
+    align-self: flex-start;
+  }
+}

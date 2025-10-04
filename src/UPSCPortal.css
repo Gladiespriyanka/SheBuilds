@@ -1,0 +1,369 @@
+/* -------------------- Global Styles -------------------- */
+.portal-container {
+    min-height: 100vh;
+    background-color: #f0f2f5; /* Light official background */
+    color: #333;
+    font-family: 'Inter', sans-serif;
+}
+
+/* -------------------- Header -------------------- */
+.portal-header {
+    background-color: #336699; /* Lighter government blue */
+    color: white;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.header-subtitle {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #cce0ff;
+}
+
+/* -------------------- Main Content -------------------- */
+.portal-main-content {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* -------------------- Search Bar -------------------- */
+.search-area {
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto 40px;
+}
+
+.search-wrapper {
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: white;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #336699;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 12px 12px 40px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #336699;
+    box-shadow: 0 0 0 2px rgba(51, 102, 153, 0.3);
+}
+
+/* -------------------- Layout -------------------- */
+.content-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* -------------------- Sidebar (Years) -------------------- */
+.sidebar {
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #336699;
+    padding-bottom: 8px;
+    color: #336699;
+}
+
+.year-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 10px;
+}
+
+.year-button {
+    flex-shrink: 0;
+    width: 90px;
+    padding: 10px 5px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid #336699;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    color: #336699;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder-icon {
+    margin-right: 5px;
+}
+
+.year-button:hover {
+    background-color: #d6e4f2;
+}
+
+.year-button.active {
+    background-color: #336699;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.year-list-empty {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    padding-top: 10px;
+}
+
+/* -------------------- Subjects Panel -------------------- */
+.subjects-main-panel {
+    flex: 1;
+}
+
+.main-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #336699;
+}
+
+.subject-list {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Subject Row */
+.subject-row {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 1fr;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+    font-size: 15px;
+}
+
+.subject-row:hover:not(.list-header) {
+    background-color: #f5f5f5;
+}
+
+.list-header {
+    background-color: #dbe6f0; /* Light blue */
+    font-weight: 600;
+    color: #336699;
+    border-bottom: 2px solid #ccc;
+}
+
+.list-header .col-action {
+    text-align: center;
+}
+
+.subject-row:last-child {
+    border-bottom: none;
+}
+
+.col-subject-name {
+    font-weight: 500;
+}
+
+.col-paper-type {
+    text-align: center;
+}
+
+.col-action {
+    text-align: right;
+}
+
+/* -------------------- Paper Type Tags -------------------- */
+.difficulty-tag {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.prelims {
+    color: #0f766e;
+    background-color: #ccfbf1;
+}
+.mains-gs {
+    color: #92400e;
+    background-color: #fef3c7;
+}
+.mains-optional {
+    color: #4338ca;
+    background-color: #e0e7ff;
+}
+
+/* -------------------- Download Button -------------------- */
+.download-btn {
+    background-color: #3385cc;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+    background-color: #1a5d99;
+}
+
+/* -------------------- Empty / Initial State -------------------- */
+.empty-search-message {
+    grid-column: span 3 / span 3;
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    border-top: 1px solid #eee;
+}
+
+.empty-search-heading {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.empty-search-subtext {
+    font-size: 14px;
+}
+
+.initial-prompt {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    border: 1px solid #ddd;
+}
+
+.prompt-icon {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.prompt-heading {
+    font-size: 22px;
+    font-weight: 600;
+    color: #336699;
+}
+
+.prompt-text {
+    color: #666;
+    margin-top: 5px;
+    max-width: 400px;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (min-width: 640px) {
+    .header-title {
+        font-size: 36px;
+    }
+    .content-layout {
+        gap: 25px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .content-layout {
+        flex-direction: row;
+    }
+    .sidebar {
+        width: 250px;
+        height: fit-content;
+        flex-shrink: 0;
+    }
+    .year-list {
+        flex-direction: column;
+        overflow-x: visible;
+        gap: 0;
+    }
+    .year-button {
+        width: 100%;
+        margin-top: 8px;
+    }
+    .subject-row {
+        grid-template-columns: 3fr 1.5fr 1fr;
+    }
+    .empty-search-message {
+        grid-column: span 3 / span 3;
+    }
+}
+
+@media (max-width: 639px) {
+    .portal-header {
+        padding: 20px 10px;
+    }
+    .header-title {
+        font-size: 24px;
+    }
+    .portal-main-content {
+        padding: 10px;
+    }
+    .subject-row {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    .list-header {
+        display: none;
+    }
+    .col-subject-name {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    .col-paper-type {
+        text-align: left;
+        order: 3;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .col-action {
+        text-align: left;
+        order: 4;
+    }
+}
