@@ -1,0 +1,277 @@
+/* ======================
+   Page
+====================== */
+.urp-page {
+  min-height: 100vh;
+  background: #f3f4f6;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ======================
+   Header
+====================== */
+.urp-header {
+  position: relative; /* anchor for back button */
+  background: linear-gradient(135deg, #1f2937, #1d4ed8);
+  color: #ffffff;
+  padding: 20px 0 22px;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.25);
+}
+
+/* Back to Dashboard — TRUE TOP LEFT */
+.back-button {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 4px 12px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.18);
+  color: #e5e7eb;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* Header content container */
+.urp-header-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 32px 24px 0; /* space below back button */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Left side (emblem + title) */
+.urp-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+/* Emblem */
+.urp-emblem {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+/* Title block */
+.urp-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.urp-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.urp-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Right-side chip */
+.urp-chip {
+  background: rgba(15, 23, 42, 0.24);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ======================
+   Main Layout
+====================== */
+.urp-main {
+  flex: 1;
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 22px 24px 30px;
+}
+
+/* ======================
+   Cards
+====================== */
+.urp-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 20px 20px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.urp-search-card {
+  margin-bottom: 20px;
+}
+
+/* ======================
+   Form
+====================== */
+.urp-field {
+  margin-bottom: 16px;
+}
+
+.urp-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.urp-required {
+  color: #dc2626;
+  margin-left: 3px;
+}
+
+.urp-input,
+.urp-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border-radius: 9px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  outline: none;
+  background: #ffffff;
+}
+
+.urp-input:focus,
+.urp-select:focus {
+  border-color: #2563eb;
+}
+
+.urp-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.urp-error {
+  margin-top: 4px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.86rem;
+}
+
+/* ======================
+   Actions
+====================== */
+.urp-actions-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.urp-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.urp-btn-primary {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+/* ======================
+   Info Cards
+====================== */
+.urp-info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.urp-info-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.urp-info-icon {
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.urp-info-title {
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.urp-info-text {
+  font-size: 0.86rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* ======================
+   Responsive
+====================== */
+@media (max-width: 768px) {
+  .urp-header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 36px 14px 0;
+  }
+
+  .urp-chip {
+    align-self: flex-start;
+  }
+
+  .urp-main {
+    padding: 18px 14px 24px;
+  }
+
+  .urp-grid-3,
+  .urp-info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .urp-actions-row {
+    justify-content: center;
+  }
+}

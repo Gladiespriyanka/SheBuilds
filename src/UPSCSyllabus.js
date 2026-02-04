@@ -1,193 +1,181 @@
-import React, { useState, useMemo } from 'react';
-import { Search, ChevronDown, ChevronUp, Download, Menu, X, BookOpen, FileText } from 'lucide-react';
-import './UPSCSyllabus.css';
+import React, { useState, useEffect } from "react";
+import "./UPSCSyllabus.css";
 
-const upscSyllabusData = [
-  // ... Paste your entire UPSC syllabus data here (same as original)
-];
-
-const OfficialButton = ({ children, onClick, icon: Icon, primary = false, disabled = false }) => (
-  <button
-    className={`official-button ${primary ? 'primary' : ''} ${disabled ? 'disabled' : ''}`}
-    onClick={onClick}
-  >
-    {Icon && <Icon size={18} />}
-    {children}
-  </button>
-);
-
-const SyllabusCard = ({ section }) => {
-  const [expandedPaper, setExpandedPaper] = useState(null);
-
-  const togglePaper = (paperId) => {
-    setExpandedPaper(expandedPaper === paperId ? null : paperId);
-  };
-
-  const handleDownload = (paperTitle) => {
-    alert(`Download functionality: In production, this would download the official PDF for "${paperTitle}"`);
-  };
-
-  return (
-    <div className="syllabus-card">
-      <div className="syllabus-card-header">
-        <h3>
-          <BookOpen size={22} className="book-icon" />
-          {section.title}
-        </h3>
-        {section.recentlyUpdated && <span className="updated-badge">UPDATED</span>}
-      </div>
-
-      {section.papers.map((paper) => {
-        const isExpanded = expandedPaper === paper.id;
-        const Icon = isExpanded ? ChevronUp : ChevronDown;
-
-        return (
-          <div key={paper.id} className="paper-card">
-            <div className="paper-card-header">
-              <h4>{paper.title}</h4>
-              <div className="paper-actions">
-                {paper.isNew && <span className="new-badge">NEW</span>}
-                <OfficialButton icon={Download} onClick={() => handleDownload(paper.title)}>Download</OfficialButton>
-                <OfficialButton icon={Icon} onClick={() => togglePaper(paper.id)}>
-                  {isExpanded ? 'Collapse' : 'Expand'}
-                </OfficialButton>
-              </div>
-            </div>
-            {isExpanded && (
-              <div className="paper-topics">
-                <ul>
-                  {paper.topics.map((topic, index) => (
-                    <li key={index}><span>•</span>{topic}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import {
+  PRELIMS_SYLLABUS,
+  MAINS_COMPULSORY,
+  MAINS_GS,
+  OPTIONAL_SUBJECTS,
+} from "./data/upscSyllabusData";
 
 export default function UPSCSyllabus() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filters, setFilters] = useState({ examType: [], subject: [] });
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('default');
+  const [activeTab, setActiveTab] = useState("prelims");
+  const [selectedOptional, setSelectedOptional] = useState("");
 
-  const allExamTypes = ['Preliminary', 'Mains'];
-  const allSubjects = [...new Set(upscSyllabusData.map(d => d.subject))].sort();
+  // Progress tracking removed from UI (no checklist),
+  // but you can leave the logic if you want to re‑enable later.
+  const [completedTopics, setCompletedTopics] = useState(() => {
+    const saved = localStorage.getItem("upsc-progress");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const handleFilterChange = (category, value) => {
-    setFilters(prev => ({
-      ...prev,
-      [category]: prev[category].includes(value)
-        ? prev[category].filter(v => v !== value)
-        : [...prev[category], value]
-    }));
+  useEffect(() => {
+    localStorage.setItem("upsc-progress", JSON.stringify(completedTopics));
+  }, [completedTopics]);
+
+  const toggleTopic = (topic) => {
+    // no visual checklist now, but keep state for future use
+    setCompletedTopics((prev) =>
+      prev.includes(topic)
+        ? prev.filter((t) => t !== topic)
+        : [...prev, topic]
+    );
   };
 
-  const filteredSyllabus = useMemo(() => {
-    let data = [...upscSyllabusData];
+  const renderSyllabusCards = (dataSource) => {
+    return Object.values(dataSource).map((item) => (
+      <div key={item.title} className="syllabus-card">
+        <div className="syllabus-card-header">
+          <h3>{item.title}</h3>
+          {item.code && <span className="paper-code-badge">{item.code}</span>}
+        </div>
+        {item.topics && item.topics.length > 0 && (
+          <ul>
+            {item.topics.map((topic) => (
+              <li key={topic}>{topic}</li>
+            ))}
+          </ul>
+        )}
+        {item.pdf && (
+          <a
+            href={item.pdf}
+            target="_blank"
+            rel="noreferrer"
+            className="official-button"
+          >
+            Official Syllabus PDF
+          </a>
+        )}
+      </div>
+    ));
+  };
 
-    if (filters.examType.length) data = data.filter(item => filters.examType.includes(item.examType));
-    if (filters.subject.length) data = data.filter(item => filters.subject.includes(item.subject));
-    if (searchTerm) {
-      const lower = searchTerm.toLowerCase();
-      data = data.filter(item =>
-        item.title.toLowerCase().includes(lower) ||
-        item.papers.some(paper =>
-          paper.title.toLowerCase().includes(lower) ||
-          paper.topics.some(topic => topic.toLowerCase().includes(lower))
-        )
-      );
-    }
-    if (sortBy === 'updated') data.sort((a, b) => b.recentlyUpdated - a.recentlyUpdated);
-    return data;
-  }, [filters, searchTerm, sortBy]);
+  // For prelims, keep order Paper I then II
+  const getPrelimsArray = () => [PRELIMS_SYLLABUS.paper1, PRELIMS_SYLLABUS.paper2];
 
   return (
     <div className="upsc-portal">
-      <header className="portal-header">
-        <div className="logo-section">
-          <div className="logo">⚖</div>
-          <div className="logo-text">
-            <div className="govt-text">GOVERNMENT OF INDIA</div>
-            <div className="commission-text">Union Public Service Commission</div>
+      <div className="main-content">
+        <header className="syllabus-header">
+          <div className="syllabus-header-left">
+            <div className="syllabus-emblem">⚖️</div>
+            <h1>UPSC Examination Syllabus</h1>
           </div>
+        </header>
+
+        {/* TABS */}
+        <div className="syllabus-tabs">
+          <button
+            className={activeTab === "prelims" ? "active" : ""}
+            onClick={() => setActiveTab("prelims")}
+          >
+            Prelims
+          </button>
+          <button
+            className={activeTab === "mains" ? "active" : ""}
+            onClick={() => setActiveTab("mains")}
+          >
+            Mains
+          </button>
+          <button
+            className={activeTab === "gs" ? "active" : ""}
+            onClick={() => setActiveTab("gs")}
+          >
+            GS Papers
+          </button>
+          <button
+            className={activeTab === "optional" ? "active" : ""}
+            onClick={() => setActiveTab("optional")}
+          >
+            Optional Subjects
+          </button>
         </div>
-        <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
-      </header>
 
-      <div className="portal-body">
-        <aside className={`sidebar ${isMenuOpen ? 'open' : ''}`}>
-          <div className="sidebar-inner">
-            <div className="search-wrapper">
-              <Search size={20} className="search-icon"/>
-              <input
-                type="text"
-                placeholder="Search syllabus..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+        {/* CONTENT SECTIONS */}
+        <div className="tab-content">
+          {activeTab === "prelims" &&
+            getPrelimsArray().map((item) => (
+              <div key={item.title} className="syllabus-card">
+                <div className="syllabus-card-header">
+                  <h3>{item.title}</h3>
+                </div>
+                <ul>
+                  {item.topics.map((topic) => (
+                    <li key={topic}>{topic}</li>
+                  ))}
+                </ul>
+                {item.pdf && (
+                  <a
+                    href={item.pdf}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="official-button"
+                  >
+                    Official Syllabus PDF
+                  </a>
+                )}
+              </div>
+            ))}
 
-            <div className="filter-section">
-              <h4>Examination Stage</h4>
-              {allExamTypes.map(type => (
-                <label key={type}>
-                  <input
-                    type="checkbox"
-                    checked={filters.examType.includes(type)}
-                    onChange={() => handleFilterChange('examType', type)}
-                  />
-                  {type}
-                </label>
-              ))}
-            </div>
+          {activeTab === "mains" && renderSyllabusCards(MAINS_COMPULSORY)}
 
-            <div className="filter-section">
-              <h4>Subject</h4>
-              {allSubjects.map(subject => (
-                <label key={subject}>
-                  <input
-                    type="checkbox"
-                    checked={filters.subject.includes(subject)}
-                    onChange={() => handleFilterChange('subject', subject)}
-                  />
-                  {subject}
-                </label>
-              ))}
-            </div>
+          {activeTab === "gs" && renderSyllabusCards(MAINS_GS)}
 
-            <div className="results-count">
-              Showing {filteredSyllabus.length} of {upscSyllabusData.length} results
-            </div>
-          </div>
-        </aside>
+          {activeTab === "optional" && (
+            <>
+              <div className="optional-selector-container">
+                <select
+                  className="optional-selector"
+                  value={selectedOptional}
+                  onChange={(e) => setSelectedOptional(e.target.value)}
+                >
+                  <option value="">— Select Optional Subject —</option>
+                  {Object.keys(OPTIONAL_SUBJECTS).map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-        <main className="main-content">
-          <div className="page-header">
-            <h1>Civil Services Examination Syllabus</h1>
-            <p>Official syllabus for UPSC Civil Services (IAS) Examination - Preliminary and Mains</p>
-          </div>
+              {selectedOptional && (
+                <div className="optional-papers">
+                  <div className="syllabus-card">
+                    <div className="syllabus-card-header">
+                      <h3>{selectedOptional} – Paper I</h3>
+                    </div>
+                    <ul>
+                      {OPTIONAL_SUBJECTS[selectedOptional].paper1.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                  </div>
 
-          <div className="sort-buttons">
-            <OfficialButton primary={sortBy === 'default'} onClick={() => setSortBy('default')}>Default Order</OfficialButton>
-            <OfficialButton primary={sortBy === 'updated'} onClick={() => setSortBy('updated')}>Recently Updated</OfficialButton>
-          </div>
-
-          {filteredSyllabus.length > 0 ? (
-            filteredSyllabus.map(section => <SyllabusCard key={section.id} section={section} />)
-          ) : (
-            <div className="no-results">
-              <FileText size={40}/>
-              <p>No syllabus sections match your current filters or search criteria.</p>
-            </div>
+                  <div className="syllabus-card">
+                    <div className="syllabus-card-header">
+                      <h3>{selectedOptional} – Paper II</h3>
+                    </div>
+                    <ul>
+                      {OPTIONAL_SUBJECTS[selectedOptional].paper2.map((t) => (
+                        <li key={t}>{t}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </>
           )}
-        </main>
+        </div>
       </div>
     </div>
   );

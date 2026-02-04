@@ -1,183 +1,298 @@
-import React, { useState, useMemo } from 'react';
-import { Download, Search, ChevronRight } from 'lucide-react';
-import './UPSCPortal.css'; // Import the standard CSS file
+import React, { useState } from "react";
+import "./UPSCResultPortal.css";
 
-// Main application component
-export default function UPSCPortal() {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedYear, setSelectedYear] = useState(2025);
+const UPSCResultPortal = ({ onBack }) => {
+  const [rollNumber, setRollNumber] = useState("");
+  const [selectedYear, setSelectedYear] = useState("2025");
+  const [selectedCategory, setSelectedCategory] = useState("General");
+  const [selectedSubject, setSelectedSubject] = useState("Geography");
+  const [result, setResult] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [error, setError] = useState("");
 
-  // Years sorted descending
-  const years = useMemo(() => Array.from({ length: 11 }, (_, i) => 2015 + i).sort((a, b) => b - a), []);
+  const years = ["2025", "2024", "2023", "2022", "2021", "2020"];
+  const categories = ["General", "OBC", "SC", "ST", "EWS"];
+  const subjects = [
+    "Geography",
+    "History",
+    "Political Science",
+    "Public Administration",
+    "Sociology",
+    "Psychology",
+    "Anthropology",
+    "Economics",
+    "Commerce",
+    "Philosophy",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Botany",
+    "Zoology",
+  ];
 
-  const allSubjects = useMemo(() => [
-    "General Studies Paper I", "General Studies Paper II", "General Studies Paper III", "General Studies Paper IV",
-    "Optional Literature (Hindi)", "Optional Literature (English)", "Geography", "Geoscientist", "Economics", "Engineering Services",
-    "National Defence Academy", "Naval Academy", "Political Science & IR", "History", "Sociology", "Anthropology",
-    "Psychology", "Public Administration", "Philosophy", "Law", "Mathematics", "Physics", "Chemistry", "Biology",
-    "Environmental Science", "Agriculture", "Mechanical Engineering", "Electrical Engineering", "Civil Engineering",
-    "Computer Science", "Management", "International Relations", "Statistics", "Commerce", "Education", "Home Science",
-    "Fine Arts", "Music", "Veterinary Science", "Medical Science"
-  ], []);
+  const handleCheckResult = (e) => {
+    if (e) e.preventDefault();
+    setError("");
 
-  // --- Utility Functions ---
+    if (!rollNumber.trim()) {
+      setError("Please enter your Roll Number or Registration ID.");
+      return;
+    }
 
-  // Function to assign a random difficulty and style
-  const getDifficulty = (subject) => {
-    const hash = subject.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const difficulties = [
-      { name: "Prelims", className: "prelims" },
-      { name: "Mains - GS", className: "mains-gs" },
-      { name: "Mains - Optional", className: "mains-optional" }
-    ];
-    return difficulties[hash % 3];
+    if (rollNumber.length < 6) {
+      setError("Please enter a valid Roll Number.");
+      return;
+    }
+
+    const mockResult = {
+      candidateName: "Candidate Name",
+      rollNumber: rollNumber,
+      category: selectedCategory,
+      year: selectedYear,
+      subject: selectedSubject,
+      totalMarks: Math.floor(Math.random() * (500 - 300) + 300),
+      rank: Math.floor(Math.random() * 1000) + 1,
+      status: Math.random() > 0.5 ? "QUALIFIED" : "NOT QUALIFIED",
+      recommended: Math.random() > 0.5,
+    };
+
+    setResult(mockResult);
+    setShowResult(true);
   };
 
-  // Randomized subjects per year (Memoized)
-  const yearSubjects = useMemo(() => {
-    const subjectsMap = {};
-    years.forEach(year => {
-      let seed = year * 1337; 
-      const shuffled = [...allSubjects].sort(() => Math.sin(seed++) - 0.5);
-      subjectsMap[year] = shuffled.slice(0, Math.floor((year % 10) * 0.8) + 5);
-    });
-    return subjectsMap;
-  }, [years, allSubjects]);
-
-  // --- Filtering Logic ---
-
-  const filteredYears = years.filter(y => y.toString().includes(searchTerm));
-
-  const filteredSubjects = useMemo(() => {
-    if (!selectedYear) return [];
-    
-    if (yearSubjects[selectedYear]) {
-      // The search term now specifically filters the subject list of the selected year
-      return yearSubjects[selectedYear].filter(subj => 
-        subj.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    return [];
-  }, [selectedYear, searchTerm, yearSubjects]);
-
+  const handleReset = () => {
+    setRollNumber("");
+    setShowResult(false);
+    setResult(null);
+    setError("");
+  };
 
   return (
-    <div className="portal-container">
-      
-      {/* Header */}
-      <header className="portal-header">
-        <h1 className="header-title">
-          UPSC Exam Question Papers Repository
-        </h1>
-        <p className="header-subtitle">Union Public Service Commission, Government of India</p>
+    <div className="result-portal">
+      <header className="result-header">
+        <button
+          type="button"
+          className="back-btn-dashboard"
+          onClick={onBack}
+        >
+          ← Back to Dashboard
+        </button>
+
+        <div className="result-header-main">
+          <div className="result-header-left">
+            <div className="result-emblem">
+              <span>⚖️</span>
+            </div>
+            <div>
+              <h1 className="result-title">UPSC Result Portal</h1>
+              <p className="result-sub">Civil Services Examination (CSE)</p>
+            </div>
+          </div>
+          <div className="result-chip">Result Lookup</div>
+        </div>
       </header>
 
-      <div className="portal-main-content">
-        
-        {/* Search Bar */}
-        <div className="search-area">
-          <div className="search-wrapper">
-            <Search className="search-icon" size={20} />
-            <input
-              type="text"
-              placeholder={selectedYear ? `Search subject papers in ${selectedYear}...` : "Select a year to search subjects"}
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="search-input"
-              disabled={!selectedYear}
-            />
-          </div>
-        </div>
-
-        {/* Content: Sidebar (Years) and Main Panel (Subjects) */}
-        <div className="content-layout">
-
-          {/* Left Sidebar: Years */}
-          <aside className="sidebar">
-            <h3 className="sidebar-title">Select Exam Year</h3>
-            
-            <div className="year-list">
-              {filteredYears.map(year => (
-                <button
-                  key={year}
-                  className={`year-button ${selectedYear === year ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelectedYear(year);
-                    setSearchTerm('');
-                  }}
-                >
-                  <ChevronRight size={14} className="folder-icon" />
-                  {year}
-                </button>
-              ))}
+      <main className="result-main">
+        <section className="result-search-card">
+          <form onSubmit={handleCheckResult}>
+            <div className="form-row">
+              <label htmlFor="rollNumber" className="form-label">
+                Roll Number / Registration ID<span className="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="rollNumber"
+                className="form-input"
+                placeholder="Enter your Roll Number"
+                value={rollNumber}
+                onChange={(e) => setRollNumber(e.target.value)}
+              />
             </div>
-            {filteredYears.length === 0 && (
-                <p className="year-list-empty">No years found.</p>
-            )}
-          </aside>
 
-          {/* Right Panel: Subjects (List View) */}
-          <main className="subjects-main-panel">
-            {selectedYear ? (
-              <>
-                <h2 className="main-title">
-                  Available Papers for the {selectedYear} Examination
-                </h2>
-                
-                <div className="subject-list">
-                    {/* List Header */}
-                    <div className="list-header subject-row">
-                        <span className="col-subject-name">Subject Name</span>
-                        <span className="col-paper-type">Paper Type</span>
-                        <span className="col-action">Action</span>
-                    </div>
-
-                  {filteredSubjects.length > 0 ? (
-                    filteredSubjects.map((subject, index) => {
-                      const paperType = getDifficulty(subject);
-                      return (
-                        <div key={index} className="subject-row">
-                          
-                          <span className="col-subject-name">
-                            {subject}
-                          </span>
-                          
-                          <span className={`col-paper-type difficulty-tag ${paperType.className}`}>
-                            {paperType.name}
-                          </span>
-
-                          <span className="col-action">
-                             <button 
-                                className="download-btn"
-                                onClick={() => console.log(`Downloading ${subject} for ${selectedYear}`)}
-                              >
-                                <Download size={18} />
-                                <span>Download PDF</span>
-                              </button>
-                          </span>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className="empty-search-message">
-                      <p className="empty-search-heading">No papers match "{searchTerm}" in {selectedYear}.</p>
-                      <p className="empty-search-subtext">Try checking the spelling or selecting a different year.</p>
-                    </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <div className="initial-prompt">
-                <Search size={48} className="prompt-icon" />
-                <h2 className="prompt-heading">View Question Papers</h2>
-                <p className="prompt-text">
-                  Start by clicking an **Exam Year** from the left-hand panel to load the associated papers.
-                </p>
+            <div className="form-row form-row-grid">
+              <div>
+                <label htmlFor="year" className="form-label">
+                  Exam Year<span className="required">*</span>
+                </label>
+                <select
+                  id="year"
+                  className="form-select"
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                >
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
               </div>
-            )}
-          </main>
-        </div>
-      </div>
+
+              <div>
+                <label htmlFor="category" className="form-label">
+                  Category<span className="required">*</span>
+                </label>
+                <select
+                  id="category"
+                  className="form-select"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  {categories.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="form-label">
+                  Optional Subject
+                </label>
+                <select
+                  id="subject"
+                  className="form-select"
+                  value={selectedSubject}
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                >
+                  {subjects.map((sub) => (
+                    <option key={sub} value={sub}>
+                      {sub}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {error && <div className="form-error">{error}</div>}
+
+            <div className="form-buttons">
+              <button type="submit" className="btn btn-primary">
+                Check Result
+              </button>
+              {showResult && (
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+          </form>
+        </section>
+
+        {showResult && result && (
+          <section className="result-card">
+            <div className="result-card-header">
+              <h2>Result Summary</h2>
+              <div
+                className={
+                  result.status === "QUALIFIED"
+                    ? "status-badge status-qualified"
+                    : "status-badge status-not-qualified"
+                }
+              >
+                <span className="status-icon">
+                  {result.status === "QUALIFIED" ? "✓" : "✕"}
+                </span>
+                {result.status}
+              </div>
+            </div>
+
+            <div className="result-grid">
+              <div className="result-item">
+                <span className="result-label">Candidate Name</span>
+                <span className="result-value">{result.candidateName}</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">Roll Number</span>
+                <span className="result-value">{result.rollNumber}</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">Category</span>
+                <span className="result-value">{result.category}</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">Exam Year</span>
+                <span className="result-value">{result.year}</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">Optional Subject</span>
+                <span className="result-value">{result.subject}</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">Total Marks</span>
+                <span className="result-value">{result.totalMarks}/750</span>
+              </div>
+              <div className="result-item">
+                <span className="result-label">All India Rank</span>
+                <span className="result-value result-rank">
+                  {result.rank}
+                </span>
+              </div>
+            </div>
+
+            <div className="result-status-line">
+              {result.status === "QUALIFIED" ? (
+                <span className="qual-text">Candidate has QUALIFIED.</span>
+              ) : (
+                <span className="not-qual-text">
+                  Candidate has NOT QUALIFIED.
+                </span>
+              )}
+            </div>
+
+            <div className="result-recommend">
+              {result.recommended
+                ? "RECOMMENDED FOR APPOINTMENT"
+                : "NOT RECOMMENDED"}
+            </div>
+
+            <div className="result-actions">
+              <button className="btn btn-download">Download</button>
+              <button className="btn btn-print">Print</button>
+            </div>
+          </section>
+        )}
+
+        <section className="result-info-strip">
+          <div className="result-info-item">
+            <div className="info-icon">📋</div>
+            <div>
+              <div className="info-title">Important Notice</div>
+              <div className="info-text">
+                Results are provisional and subject to verification of
+                eligibility conditions.
+              </div>
+            </div>
+          </div>
+          <div className="result-info-item">
+            <div className="info-icon">📞</div>
+            <div>
+              <div className="info-title">Helpline</div>
+              <div className="info-text">
+                Phone: 011‑23098543<br />
+                Email: upsc-cse@gov.in
+              </div>
+            </div>
+          </div>
+          <div className="result-info-item">
+            <div className="info-icon">📄</div>
+            <div>
+              <div className="info-title">Documents Required</div>
+              <div className="info-text">
+                Keep your admit card and valid photo identity proof ready for
+                verification.
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   );
-}
+};
+
+export default UPSCResultPortal;
